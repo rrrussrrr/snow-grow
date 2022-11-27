@@ -13,7 +13,9 @@ import Typography from '@mui/material/Typography';
 function App() {
 
   const [stockTickers, setStockTickers] = useState([
-    {ticker: "AAPL"},{ticker:"GOOG"}
+    {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
+    {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
+    {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"}
   ]);
 
 
