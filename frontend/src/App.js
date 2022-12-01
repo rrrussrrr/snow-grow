@@ -1,5 +1,8 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import TickerRequestHandler from './services/ticker_service'
+
+
 import StockTab from './components/StockTab';
 import StockTable from './components/StockDisplay';
 
@@ -11,18 +14,28 @@ import Typography from '@mui/material/Typography';
 
 import SearchBar from './components/SearchBar'
 
+
+
 function App() {
 
   const [stockTickers, setStockTickers] = useState([
-    {ticker: "AAsPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
-    {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
-    {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"}
+    {ticker: "AAsPL"},{ticker:"GOOG"}
   ]);
   const [searchBarText, setSearchBarText] = useState([""]);
 
   const findTicker = (e) => {
     e.preventDefault();
-    setSearchBarText("");
+
+    TickerRequestHandler
+      .getTickerData(searchBarText)
+      .then(returnedData => {
+        // update ticker table
+        setStockTickers([returnedData, ...stockTickers])
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      setSearchBarText("");
   }
 
   const searchBarChange = (e) => {

@@ -11,6 +11,9 @@ const StockTab = ({stockData}) => {
           <Typography variant="h5" component="div">
             {stockData.ticker}
           </Typography>
+          <Typography variant="h5" component="div">
+            {stockData.close}
+          </Typography>
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>

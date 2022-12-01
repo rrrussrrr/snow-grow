@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/api/tickers'
+const baseUrl = 'http://localhost:3006/api/ticker'
 
 const getTickerData = (ticker) => {
   const request = axios.get(baseUrl + "/" + ticker)
