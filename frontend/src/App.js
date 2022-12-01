@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import SearchBar from './components/SearchBar'
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
   return (
     <div className="App">
 
-
+      <SearchBar buttonText="Search"/>
       <StockTable stockList={stockTickers}/>
       <Button>Cliq</Button>
     </div>
