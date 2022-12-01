@@ -14,17 +14,31 @@ import SearchBar from './components/SearchBar'
 function App() {
 
   const [stockTickers, setStockTickers] = useState([
-    {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
+    {ticker: "AAsPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
     {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},
     {ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"},{ticker: "AAPL"},{ticker:"GOOG"}
   ]);
+  const [searchBarText, setSearchBarText] = useState([""]);
 
+  const findTicker = (e) => {
+    e.preventDefault();
+    setSearchBarText("");
+  }
+
+  const searchBarChange = (e) => {
+    setSearchBarText(e.target.value)
+  }
 
 
   return (
     <div className="App">
 
-      <SearchBar buttonText="Search"/>
+      <SearchBar 
+        searchValue={searchBarText}
+        onChange={searchBarChange} 
+        buttonText="Search"
+        onSubmit={findTicker}
+      />
       <StockTable stockList={stockTickers}/>
       <Button>Cliq</Button>
     </div>
