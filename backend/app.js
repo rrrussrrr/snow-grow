@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const tickerCloseDataRouter = require('./controllers/ticker_close_datapoints')
+const usersRouter = require('./controllers/users')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 
@@ -12,6 +13,7 @@ mongoose.connect(config.MONGODB_URI)
 app.use(cors())
 app.use(express.json())
 app.use('/api/ticker', tickerCloseDataRouter)
+app.use('/api/users', usersRouter)
 
 
 module.exports = app
