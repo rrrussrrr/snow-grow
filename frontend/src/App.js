@@ -18,24 +18,45 @@ import SearchBar from './components/SearchBar'
 
 function App() {
 
-  const [stockTickers, setStockTickers] = useState([
-    {ticker: "AAsPL"},{ticker:"GOOG"}
-  ]);
+  const [stockTickersData, setStockTickersData] = useState([]);
   const [searchBarText, setSearchBarText] = useState([""]);
+  const [stockTickers, setStockTickers] = useState(["AAPL", "GOOG", "GE"]);
+  // on start, get favorite stocks from server for user/list of defaults
 
-  const findTicker = (e) => {
+  const defaultTickers = ["AAPL", "GOOG", "GE"];
+
+  //on start, get latest info for stocks in favorites/defaults
+
+  useEffect(() => {
+    // userService
+    //   .getFavorites()
+    //   .then(favorites => {
+    //     setStockTickers(favorites)
+    //   })
+    stockTickers.forEach(ticker => {
+      console.log(ticker)
+      findTicker(ticker);
+    })
+  }, [])
+  
+
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
+    findTicker(searchBarText);
+    setSearchBarText("");
+  }
 
+  const findTicker = (tickerName) => {
     TickerRequestHandler
-      .getTickerData(searchBarText)
+      .getTickerData(tickerName)
       .then(returnedData => {
         // update ticker table
-        setStockTickers([returnedData, ...stockTickers])
+        setStockTickersData([returnedData, ...stockTickersData])
       })
       .catch(error => {
         console.log(error)
       })
-      setSearchBarText("");
+
   }
 
   const searchBarChange = (e) => {
@@ -50,9 +71,9 @@ function App() {
         searchValue={searchBarText}
         onChange={searchBarChange} 
         buttonText="Search"
-        onSubmit={findTicker}
+        onSubmit={handleSearchSubmit}
       />
-      <StockTable stockList={stockTickers}/>
+      <StockTable stockList={stockTickersData}/>
       <Button>Cliq</Button>
     </div>
   );

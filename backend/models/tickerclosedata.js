@@ -3,41 +3,51 @@ const mongoose = require('mongoose')
 const tickerCloseDataSchema = new mongoose.Schema({
     ticker: {
         type: String,
-        required: true
+        // required: true
     },
     volume: {
         type: Number,
-        required: true
+        // required: true
     },
     volumeWeightedAerage: {
         type: Number,
-        required: true
+        // required: true
     },
     open: {
         type: Number,
-        required: true
+        // required: true
     },
     close: {
         type: Number,
-        required: true
+        // required: true
     },
     highest: {
         type: Number,
-        required: true
+        // required: true
     },
     lowest: {
         type: Number,
-        required: true
+        // required: true
     },
     timeStart: {
         type: Number,
-        required: true
+        // required: true
     },
     numOfTrades: {
         type: Number,
-        required: true
+        // required: true
     }
 })
+
+tickerCloseDataSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+    }
+})
+
+module.exports = mongoose.model('TickerCloseData', tickerCloseDataSchema)
 
 /*
 
