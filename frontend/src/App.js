@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import TickerRequestHandler from './services/ticker_service'
-
+import loginService from './services/login'
 
 import StockTab from './components/StockTab';
 import StockTable from './components/StockDisplay';
@@ -24,8 +24,11 @@ function App() {
   const [searchBarText, setSearchBarText] = useState([""]);
   const [stockTickers, setStockTickers] = useState(["AAPL", "GOOG", "GE"]);
 
+  // for login form
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
+  const [user, setUser] = useState(null);
   // on start, get favorite stocks from server for user/list of defaults
 
   const defaultTickers = ["AAPL", "GOOG", "GE"];
@@ -68,8 +71,20 @@ function App() {
     setSearchBarText(e.target.value)
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    try {
+      const user = await loginService.login({
+        username: userName, password:password
+      })
+      setUser(user)
+      setUserName("")
+      setPassword("")
+    } 
+    catch (exception) {
+      console.log("error")
+    }
     // TODO
   }
 
@@ -82,16 +97,24 @@ function App() {
         buttonText="Search"
         onSubmit={handleSearchSubmit}
       />
-      <LoginForm
+
+      { !user ? 
+        <LoginForm
         userName={userName}
         password={password}
         onChangeUserName={(e) => setUserName(e.target.value)}
         onChangePassword={(e) => setPassword(e.target.value)}
         buttonText="Login"
         onSubmit={handleLogin}
-      />
+        />
+        : 
+        <button onClick={() => setUser(null)}>Log out {user.username}</button>
+      }
+
       <StockTable stockList={stockTickersData}/>
+
       <Button>Cliq</Button>
+
     </div>
   );
 }
