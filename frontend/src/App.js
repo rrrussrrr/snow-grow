@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 
 import SearchBar from './components/SearchBar'
 
+import LoginForm from './components/LoginForm'
+
 
 
 function App() {
@@ -21,6 +23,9 @@ function App() {
   const [stockTickersData, setStockTickersData] = useState([]);
   const [searchBarText, setSearchBarText] = useState([""]);
   const [stockTickers, setStockTickers] = useState(["AAPL", "GOOG", "GE"]);
+
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   // on start, get favorite stocks from server for user/list of defaults
 
   const defaultTickers = ["AAPL", "GOOG", "GE"];
@@ -63,6 +68,10 @@ function App() {
     setSearchBarText(e.target.value)
   }
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // TODO
+  }
 
   return (
     <div className="App">
@@ -72,6 +81,14 @@ function App() {
         onChange={searchBarChange} 
         buttonText="Search"
         onSubmit={handleSearchSubmit}
+      />
+      <LoginForm
+        userName={userName}
+        password={password}
+        onChangeUserName={(e) => setUserName(e.target.value)}
+        onChangePassword={(e) => setPassword(e.target.value)}
+        buttonText="Login"
+        onSubmit={handleLogin}
       />
       <StockTable stockList={stockTickersData}/>
       <Button>Cliq</Button>
