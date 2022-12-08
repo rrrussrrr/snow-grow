@@ -31,7 +31,6 @@ function App() {
   const [user, setUser] = useState(null);
   // on start, get favorite stocks from server for user/list of defaults
 
-  const defaultTickers = ["AAPL", "GOOG", "GE"];
 
   //on start, get latest info for stocks in favorites/defaults
 
@@ -41,10 +40,11 @@ function App() {
     //   .then(favorites => {
     //     setStockTickers(favorites)
     //   })
-    stockTickers.forEach(ticker => {
-      console.log(ticker)
-      findTicker(ticker);
-    })
+    // stockTickers.forEach(ticker => {
+    //   console.log(ticker)
+    //   // findTicker(ticker);
+    // })
+    testt();
   }, [])
   
 
@@ -60,11 +60,39 @@ function App() {
       .then(returnedData => {
         // update ticker table
         setStockTickersData([returnedData, ...stockTickersData])
+        console.log(stockTickersData)
       })
       .catch(error => {
         console.log(error)
       })
 
+  }
+
+  const testt = async () => {
+    const result = await Promise.all(
+      stockTickers.map(async (ticker) => {
+        const data = await TickerRequestHandler.getTickerData(ticker);
+        return data;
+      })
+    )
+
+      setStockTickersData(result);
+
+    // stockTickers.forEach(ticker => {
+    //   TickerRequestHandler
+    //   .getTickerData(ticker)
+    //   .then(returnedData => {
+    //     // update ticker table
+    //     console.log(returnedData)
+    //     result.push(returnedData)
+    //     return 
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // })
+    // console.log(result)
+    // setStockTickersData([...result])
   }
 
   const searchBarChange = (e) => {
