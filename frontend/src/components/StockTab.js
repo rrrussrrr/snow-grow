@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const StockTab = ({stockData}) => {
+const StockTab = ({stockData, toggleFavorite, loggedIn}) => {
     return (
         <Card sx={{ minWidth: 275 }}>
         <CardContent>
@@ -16,7 +16,14 @@ const StockTab = ({stockData}) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          {loggedIn ?
+            <Button 
+            size="small" 
+            onClick={() => toggleFavorite(stockData.ticker)}
+            >Learn More
+          </Button>
+          : null
+          }
         </CardActions>
       </Card>
     )

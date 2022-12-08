@@ -22,7 +22,7 @@ function App() {
 
   const [stockTickersData, setStockTickersData] = useState([]);
   const [searchBarText, setSearchBarText] = useState([""]);
-  const [stockTickers, setStockTickers] = useState(["AAPL", "GOOG", "GE"]);
+  const [stockTickers, setStockTickers] = useState([]);
 
   // for login form
   const [userName, setUserName] = useState("");
@@ -45,7 +45,7 @@ function App() {
     //   // findTicker(ticker);
     // })
     testt();
-  }, [])
+  }, [stockTickers])
   
 
   const handleSearchSubmit = (e) => {
@@ -95,6 +95,24 @@ function App() {
     // setStockTickersData([...result])
   }
 
+  const getFavorites = () => {
+    // if the logged in user has favorites, display them
+  }
+
+  const toggleFavorites = async (ticker) => {
+    const newFaves = [...stockTickers].concat([ticker])
+    try {
+      const res = await loginService.update({
+        favorites: newFaves
+      }, user.username)
+
+      setStockTickers(res.favorites)
+    } 
+    catch (exception) {
+      console.log("error")
+    }
+  }
+
   const searchBarChange = (e) => {
     setSearchBarText(e.target.value)
   }
@@ -109,6 +127,10 @@ function App() {
       setUser(user)
       setUserName("")
       setPassword("")
+      setStockTickers(user.favorites)
+      //
+      console.log(user)
+      getFavorites();
     } 
     catch (exception) {
       console.log("error")
@@ -139,7 +161,11 @@ function App() {
         <button onClick={() => setUser(null)}>Log out {user.username}</button>
       }
 
-      <StockTable stockList={stockTickersData}/>
+      <StockTable 
+        stockList={stockTickersData} 
+        loggedIn={user ? true : false}
+        // toggleFavorite={toggleFavorite}
+      />
 
       <Button>Cliq</Button>
 
