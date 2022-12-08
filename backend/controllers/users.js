@@ -21,11 +21,38 @@ usersRouter.post('/', async (request, response) => {
     username,
     name,
     passwordHash,
+    favorites: []
   })
 
   const savedUser = await user.save()
 
   response.status(201).json(savedUser)
+})
+
+usersRouter.patch('/:username', async (request, response, next) => {
+  const username = request.params.username
+  const body = request.body
+  console.log(body)
+  // if (!body.name) {
+  //   return response.status(400).json({ 
+  //     error: 'name missing' 
+  //   })
+  // }
+
+  // if (!body.number) {
+  //   return response.status(400).json({ 
+  //     error: 'number missing' 
+  //   })
+  // }
+
+  User.findOneAndUpdate(
+    {username}, 
+    {favorites: body.favorites}
+  )
+    .then(updated => {
+      response.json(updated)
+    })
+    .catch(error => next(error))
 })
 
 module.exports = usersRouter
