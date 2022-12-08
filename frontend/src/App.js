@@ -99,13 +99,15 @@ function App() {
     // if the logged in user has favorites, display them
   }
 
-  const toggleFavorites = async (ticker) => {
-    const newFaves = [...stockTickers].concat([ticker])
+  const toggleFavorite = async (ticker) => {
+    console.log("toggling", ticker)
+    const newFaves = [...user.favorites].concat([ticker])
+    console.log("newfaves", newFaves)
     try {
       const res = await loginService.update({
         favorites: newFaves
       }, user.username)
-
+      console.log("res:", res)
       setStockTickers(res.favorites)
     } 
     catch (exception) {
@@ -127,6 +129,7 @@ function App() {
       setUser(user)
       setUserName("")
       setPassword("")
+      console.log("faves", user.favorites)
       setStockTickers(user.favorites)
       //
       console.log(user)
@@ -164,7 +167,7 @@ function App() {
       <StockTable 
         stockList={stockTickersData} 
         loggedIn={user ? true : false}
-        // toggleFavorite={toggleFavorite}
+        toggleFavorite={toggleFavorite}
       />
 
       <Button>Cliq</Button>

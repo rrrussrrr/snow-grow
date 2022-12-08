@@ -6,7 +6,16 @@ const login = async (credentials) => {
   return response.data
 }
 
+const update = async (body, username) => {
+    const response = await axios.patch('http://localhost:3006/api/users/' + username, body)
+    return response.data
+  }
+  
+
+
+
 
 export default { 
-  login
+  login,
+  update
 }

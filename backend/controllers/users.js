@@ -47,7 +47,8 @@ usersRouter.patch('/:username', async (request, response, next) => {
 
   User.findOneAndUpdate(
     {username}, 
-    {favorites: body.favorites}
+    {$set:{favorites: body.favorites}},
+    {new: true}
   )
     .then(updated => {
       response.json(updated)
