@@ -16,7 +16,15 @@ import SearchBar from './components/SearchBar'
 
 import LoginForm from './components/LoginForm'
 
+import AppBar from '@mui/material/AppBar'
 
+
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
+import Grid from '@mui/material/Grid';
 
 function App() {
 
@@ -141,10 +149,83 @@ function App() {
     // TODO
   }
 
+
+
   return (
     <div className="App">
 
+     <Grid container direction="column" justifyContent="center" spacing={1}>
+      <Grid item>
+      <AppBar position="sticky">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            News
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+
+      </Grid>
+      <Grid item> 
       <SearchBar 
+        searchValue={searchBarText}
+        onChange={searchBarChange} 
+        buttonText="Search"
+        onSubmit={handleSearchSubmit}
+      />
+      </Grid>
+      <Grid item> 
+      { !user ? 
+        <LoginForm
+        userName={userName}
+        password={password}
+        onChangeUserName={(e) => setUserName(e.target.value)}
+        onChangePassword={(e) => setPassword(e.target.value)}
+        buttonText="Login"
+        onSubmit={handleLogin}
+        />
+        : 
+        <button onClick={() => setUser(null)}>Log out {user.username}</button>
+      }
+      </Grid>     
+      <Grid item> 
+      <StockTable 
+        stockList={stockTickersData} 
+        loggedIn={user ? true : false}
+        toggleFavorite={toggleFavorite}
+      />
+      </Grid>
+
+     </Grid>
+
+
+      {/* <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            News
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar> */}
+      {/* <SearchBar 
         searchValue={searchBarText}
         onChange={searchBarChange} 
         buttonText="Search"
@@ -168,7 +249,7 @@ function App() {
         stockList={stockTickersData} 
         loggedIn={user ? true : false}
         toggleFavorite={toggleFavorite}
-      />
+      /> */}
 
       <Button>Cliq</Button>
 
