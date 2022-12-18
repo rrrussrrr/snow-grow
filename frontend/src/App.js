@@ -58,6 +58,8 @@ function App() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    //check if valid ticker
+    if (searchBarText.length === 0) return
     findTicker(searchBarText);
     setSearchBarText("");
   }
