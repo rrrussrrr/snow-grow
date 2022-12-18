@@ -31,6 +31,7 @@ function App() {
   const [stockTickersData, setStockTickersData] = useState([]);
   const [searchBarText, setSearchBarText] = useState([""]);
   const [stockTickers, setStockTickers] = useState([]);
+  const [searchResult, setSearchResult] = useState(null);
 
   // for login form
   const [userName, setUserName] = useState("");
@@ -55,6 +56,9 @@ function App() {
     testt();
   }, [stockTickers])
   
+  const searchBarChange = (e) => {
+    setSearchBarText(e.target.value)
+  }
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -64,12 +68,15 @@ function App() {
     setSearchBarText("");
   }
 
+  // when searching for a ticker.  Will display the ticker's most recent info at the top of your list if a valid ticker
   const findTicker = (tickerName) => {
     TickerRequestHandler
       .getTickerData(tickerName)
       .then(returnedData => {
         // update ticker table
-        setStockTickersData([returnedData, ...stockTickersData])
+        //check if already contains
+        setSearchResult(returnedData)
+        // setStockTickersData([returnedData, ...stockTickersData])
         console.log(stockTickersData)
       })
       .catch(error => {
@@ -125,9 +132,7 @@ function App() {
     }
   }
 
-  const searchBarChange = (e) => {
-    setSearchBarText(e.target.value)
-  }
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -199,6 +204,13 @@ function App() {
         <button onClick={() => setUser(null)}>Log out {user.username}</button>
       }
       </Grid>     
+      <Grid item>
+        { searchResult ? 
+          <StockTab toggleFavorite={toggleFavorite} loggedIn={user ? true : false} stockData={searchResult} />
+          :
+          null
+        }
+      </Grid>
       <Grid item> 
       <StockTable 
         stockList={stockTickersData} 
