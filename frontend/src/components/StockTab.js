@@ -6,10 +6,9 @@ import Typography from '@mui/material/Typography';
 import { flexbox } from '@mui/system'
 import Box from '@mui/material/Box'
 
-const StockTab = ({stockData, toggleFavorite, loggedIn}) => {
-
+const StockTab = ({fave, stockData, toggleFavorite, loggedIn}) => {
+  console.log(fave)
   const percentChange = Math.round(100 * (1 - (stockData.open / stockData.close)) * 10) / 10;
-
     return (
         <Card sx={{ minWidth: 275 }}>
         <CardContent>
@@ -34,7 +33,9 @@ const StockTab = ({stockData, toggleFavorite, loggedIn}) => {
             <Button 
             size="small" 
             onClick={() => toggleFavorite(stockData.ticker)}
-            >Favorite
+            >{
+              fave ? "Remove Favorite" : "Set Favorite"
+            }
           </Button>
           : null
           }

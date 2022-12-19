@@ -118,13 +118,22 @@ function App() {
 
   const toggleFavorite = async (ticker) => {
     console.log("toggling", ticker)
-    const newFaves = [...user.favorites].concat([ticker])
+    // check if favorite exists already
+    let newFaves = [];
+    if (user.favorites.includes(ticker)) {
+      //remove
+      newFaves = user.favorites.filter(x => x !== ticker)
+    } else {
+      // add
+      newFaves = [...user.favorites].concat([ticker])
+    }
     console.log("newfaves", newFaves)
     try {
       const res = await loginService.update({
         favorites: newFaves
       }, user.username)
       console.log("res:", res)
+      setUser(res)
       setStockTickers(res.favorites)
     } 
     catch (exception) {
@@ -206,13 +215,14 @@ function App() {
       </Grid>     
       <Grid item>
         { searchResult ? 
-          <StockTab toggleFavorite={toggleFavorite} loggedIn={user ? true : false} stockData={searchResult} />
+          <StockTab fave={false} user={user} toggleFavorite={toggleFavorite} loggedIn={user ? true : false} stockData={searchResult} />
           :
           null
         }
       </Grid>
       <Grid item> 
       <StockTable 
+        faves={user !== null ? user.favorites : null}
         stockList={stockTickersData} 
         loggedIn={user ? true : false}
         toggleFavorite={toggleFavorite}
