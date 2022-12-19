@@ -275,7 +275,7 @@ function App() {
         toggleFavorite={toggleFavorite}
       /> */}
 
-      <Button>Cliq</Button>
+
 
     </div>
   );
