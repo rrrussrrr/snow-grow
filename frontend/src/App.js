@@ -64,6 +64,11 @@ function App() {
     e.preventDefault();
     //check if valid ticker
     if (searchBarText.length === 0) return
+    if (stockTickers.includes(searchBarText)) {
+      setSearchResult(null)
+      setSearchBarText("");
+      return
+    }
     findTicker(searchBarText);
     setSearchBarText("");
   }
@@ -75,7 +80,10 @@ function App() {
       .then(returnedData => {
         // update ticker table
         //check if already contains
+
         setSearchResult(returnedData)
+        
+
         // setStockTickersData([returnedData, ...stockTickersData])
         console.log(stockTickersData)
       })
@@ -222,7 +230,6 @@ function App() {
       </Grid>
       <Grid item> 
       <StockTable 
-        faves={user !== null ? user.favorites : null}
         stockList={stockTickersData} 
         loggedIn={user ? true : false}
         toggleFavorite={toggleFavorite}

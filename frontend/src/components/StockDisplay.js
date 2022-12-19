@@ -1,8 +1,6 @@
 import StockTab from "./StockTab"
 
-const StockTable = ({faves, stockList, toggleFavorite, loggedIn}) => {
-    console.log("faves", faves)
-    console.log("cinlude?", faves.includes("GOOG"))
+const StockTable = ({stockList, toggleFavorite, loggedIn}) => {
     return (
         <div>
             {stockList.map(stock => 
