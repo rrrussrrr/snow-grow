@@ -55,6 +55,18 @@ function App() {
     // })
     testt();
   }, [stockTickers])
+
+  // getting locally saved login data
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser');
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user)
+      setStockTickers(user.favorites)
+      console.log(user)
+      getFavorites();
+    }
+  }, [])
   
   const searchBarChange = (e) => {
     setSearchBarText(e.target.value)
@@ -158,6 +170,7 @@ function App() {
       const user = await loginService.login({
         username: userName, password:password
       })
+      window.localStorage.setItem('loggedInUser', JSON.stringify(user)) 
       setUser(user)
       setUserName("")
       setPassword("")
@@ -173,7 +186,10 @@ function App() {
     // TODO
   }
 
-
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedInUser')
+    setUser(null);
+  }
 
   return (
     <div className="App">
@@ -218,7 +234,7 @@ function App() {
         onSubmit={handleLogin}
         />
         : 
-        <button onClick={() => setUser(null)}>Log out {user.username}</button>
+        <button onClick={handleLogout}>Log out {user.username}</button>
       }
       </Grid>     
       <Grid item>
