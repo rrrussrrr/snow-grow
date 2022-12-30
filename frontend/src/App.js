@@ -194,7 +194,7 @@ function App() {
   return (
     <div className="App">
 
-     <Grid container direction="column" justifyContent="center" spacing={1}>
+     {/* <Grid container direction="column" justifyContent="center" spacing={1}>
       <Grid item>
       <AppBar position="sticky">
         <Toolbar>
@@ -212,18 +212,18 @@ function App() {
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
-      </AppBar>
-
-      </Grid>
-      <Grid item> 
+      </AppBar> */}
+{/* 
+      </Grid> */}
+      {/* <Grid item>  */}
       <SearchBar 
         searchValue={searchBarText}
         onChange={searchBarChange} 
         buttonText="Search"
         onSubmit={handleSearchSubmit}
       />
-      </Grid>
-      <Grid item> 
+      {/* </Grid> */}
+      {/* <Grid item>  */}
       { !user ? 
         <LoginForm
         userName={userName}
@@ -236,23 +236,23 @@ function App() {
         : 
         <button onClick={handleLogout}>Log out {user.username}</button>
       }
-      </Grid>     
-      <Grid item>
+      {/* </Grid>     
+      <Grid item> */}
         { searchResult ? 
           <StockTab fave={false} user={user} toggleFavorite={toggleFavorite} loggedIn={user ? true : false} stockData={searchResult} />
           :
           null
         }
-      </Grid>
-      <Grid item> 
+      {/* </Grid>
+      <Grid item>  */}
       <StockTable 
         stockList={stockTickersData} 
         loggedIn={user ? true : false}
         toggleFavorite={toggleFavorite}
       />
-      </Grid>
+      {/* </Grid>
 
-     </Grid>
+     </Grid> */}
 
 
       {/* <AppBar position="static">
