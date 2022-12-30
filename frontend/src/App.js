@@ -26,6 +26,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import Grid from '@mui/material/Grid';
 
+import AppHeader from './components/AppHeader';
+
 function App() {
 
   const [stockTickersData, setStockTickersData] = useState([]);
@@ -34,8 +36,10 @@ function App() {
   const [searchResult, setSearchResult] = useState(null);
 
   // for login form
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  // const [userName, setUserName] = useState("");
+  // const [password, setPassword] = useState("");
+
+  const [loginVisible, setLoginVisible] = useState(false);
 
   const [user, setUser] = useState(null);
   // on start, get favorite stocks from server for user/list of defaults
@@ -163,8 +167,8 @@ function App() {
 
 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async (userName, password) => {
+    // e.preventDefault();
 
     try {
       const user = await loginService.login({
@@ -172,8 +176,6 @@ function App() {
       })
       window.localStorage.setItem('loggedInUser', JSON.stringify(user)) 
       setUser(user)
-      setUserName("")
-      setPassword("")
       console.log("faves", user.favorites)
       setStockTickers(user.favorites)
       //
@@ -216,16 +218,25 @@ function App() {
 {/* 
       </Grid> */}
       {/* <Grid item>  */}
-      <SearchBar 
-        searchValue={searchBarText}
-        onChange={searchBarChange} 
-        buttonText="Search"
-        onSubmit={handleSearchSubmit}
-      />
-      {/* </Grid> */}
-      {/* <Grid item>  */}
-      { !user ? 
-        <LoginForm
+      {/* <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography className={loginVisible ? "hide" : "show"} variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            SnowGrow
+          </Typography>
+          <Button className={loginVisible ? "hide" : "show"} color="inherit">Sign Up</Button>
+          <Button className={loginVisible ? "hide" : "show"} onClick={() => setLoginVisible(true)}color="inherit">Login</Button>
+          { !user ? 
+        <LoginForm 
+        className={loginVisible ? "show" : "hide"}
         userName={userName}
         password={password}
         onChangeUserName={(e) => setUserName(e.target.value)}
@@ -236,6 +247,24 @@ function App() {
         : 
         <button onClick={handleLogout}>Log out {user.username}</button>
       }
+        </Toolbar>
+      </AppBar> */}
+
+      <AppHeader
+        user={user}
+        handleLogin={handleLogin}
+        handleLogout={handleLogout}
+      >
+      </AppHeader>
+
+      <SearchBar 
+        searchValue={searchBarText}
+        onChange={searchBarChange} 
+        buttonText="Search"
+        onSubmit={handleSearchSubmit}
+      />
+      {/* </Grid> */}
+      {/* <Grid item>  */}
       {/* </Grid>     
       <Grid item> */}
         { searchResult ? 
@@ -255,23 +284,7 @@ function App() {
      </Grid> */}
 
 
-      {/* <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar> */}
+
       {/* <SearchBar 
         searchValue={searchBarText}
         onChange={searchBarChange} 

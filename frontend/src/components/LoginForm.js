@@ -1,8 +1,9 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import '../styles.css'
 const LoginForm = ({userName, password, onChangeUserName, onChangePassword, onSubmit, hasButton = true, buttonText = ""}) => {
     return (
-        <form onSubmit={onSubmit}>
+        <form className="flex" onSubmit={onSubmit}>
          <TextField 
             value={userName}
             id="username" 
@@ -21,7 +22,7 @@ const LoginForm = ({userName, password, onChangeUserName, onChangePassword, onSu
             onChange={onChangePassword}
             // onSubmit={onSubmit}
          /> 
-        {hasButton ? <Button type="submit">{buttonText}</Button> : null}
+        {hasButton ? <Button color="inherit" type="submit">{buttonText}</Button> : null}
         </form>
 
     )
